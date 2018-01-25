@@ -33,11 +33,22 @@
 ## Slices
 1. Since a slice contains a pointer to an element of an array, passing a slice to a function permits the function to modify the underlying array elements.
 2. Left shift a slice by `n` elements can be achieved by reverse the leading `n` elements, reverse the remaining elements, and then reverse the whole slice. Right shift can be achieved by doing the whole reverse first. This is not most time efficient, but is done in place without extra space.
-3. Unlike arrays, slices are not comparable, so we cannot use == to test whether two slices contain the same elements. There are two reasons for the language not providing a deep comparison: 1. slices may refer to itself. 2. slices used as map key. Questions: 1. can maps compare? 2. Can slices be used as map keys?
+3. Unlike arrays, slices are not comparable, so we cannot use == to test whether two slices contain the same elements. There are two reasons for the language not providing a deep comparison: 1. slices may refer to itself. 2. slices used as map key. Questions: can maps compare?
 4. The zero value of a slice type is nil. A nil slice has no underlying array. The only legal slice comparison is against nil
 5. The built-in function `make` can be used to create a slice of a specified element type, length, and capacity.
 6. The build-in funciton `append`can be used to append items to slices. Internally, it checks the capacity, if greater than length, extend the slice by defining a larger slice and add the new item. They share the same underlying array. If not enough capacity, allocate a new array enough to hold the new element, copy all existing elements and the new element. 
 7. The strategy for allocation of new array in `append` is to double the existing length, which can achieve amortized linear complexity. (why?)
 8. the built-in function `copy` can be used to copy elements from one slice to another of the same type. The total number of elements that are copied is returned, which is the smaller of the length of destination and source slices.
 9. The `append` can accept any number of final arguments. This is defined using `y ...int`, and called with `...y`.
+
+## Maps
+1. A map is a reference to a hash table, and a map type is written `map[K]V`, where `K` and `V` are the types of its keys and values.
+2. The key type `K` must be comparable using `==`, i.e. slices cannot be keys for a map. Though floating-point numbers are comparable, it’s a bad idea to compare floats for equality.
+3. The built-in function `make` can be used to create a map: `ages := make(map[string]int)`
+4. Map elements can be removed with the built-in function `delete`: `delete(ages, "alice")`
+5. A map lookup using a key that isn’t present returns the zero value for its type.
+6. A map element is not a variable, and we cannot take its addres, because growing a map might cause rehashing of existing elements into new storage locations, thus potentially invalidating the address.
+7. `range` can be used to enumerate all key/value pairs in the map, but the order is random, varying from one execution to the next. To enumerate the key/value pairs in order, we must sort the keys explicitly first.
+8. `len` can be used to get all the elements in the map.
+
 
