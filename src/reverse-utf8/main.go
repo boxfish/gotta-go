@@ -32,6 +32,10 @@ func reverseUTF8Runes(s []byte) {
 	reverse(s)
 }
 
+func (s []int) len() {
+	return len(s)
+}
+
 func main() {
 	var s1 = "hello, 世界!"
 	fmt.Println(s1)

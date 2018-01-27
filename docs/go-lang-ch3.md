@@ -20,6 +20,7 @@
 10. Integer literals of any size and type can be written as ordinary decimal numbers, or as octal numbers if they begin with `0`, as in `0666`, or as hexadecimal if they begin with `0x` or `0X`, as in `0xdeadbeef`.
 11. When printing numbers using the fmt package, we can control the radix and format with the `%d`, `%o`, and `%x` verbs
 12. Rune literals are written as a character within single quotes.Runes are printed with `%c`, or with `%q` if quoting is desired.
+13. To find whether the platform is 32-bit or 64-bit, we can use this following expression: `32<<(^uint(0)>>63)`
 
 ## Floating-Point Numbers
 1. A float32 provides approximately six decimal digits of precision, whereas a float64 provides about 15 digits. float64 should be preferred for most purposes because float32 computations accumulate error rapidly
