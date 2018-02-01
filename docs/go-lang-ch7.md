@@ -27,3 +27,14 @@
 
 ## The error interface
 1. In `errors` package, the `New` funciton returns a pointer to the underlying error struct so that each error created won't compare equal to others.
+
+## Type Assertions
+1. If the asserted type `T` is a concrete type, then the type assertion checks whether x’s dynamic type is identical to T. If this check succeeds, the result of the type assertion is x’s dynamic value, whose type is of course T. In other words, a type assertion to a concrete type extracts the concrete value from its operand. If the check fails, then the operation panics.
+2. If the asserted type `T` is an interface type, then the type assertion checks whether x’s dynamic type satisfies T. If this check succeeds, the dynamic value is not extracted; the result is still an interface value with the same type and value components, but the result has the interface type T.
+3. No matter what type was asserted, if the operand is a nil interface value, the type assertion fails. 
+4. If the type assertion appears in an assignment in which two results are expected, the operation does not panic on failure but instead returns an additional second result, a boolean indicating success.
+5. Interface Type Assertions can be used to query behaviors, that is to check whether certain method exists by defining a new interface with that method and test whether the given interface also satisfies this new interface.
+
+## Type Switches
+1. Interfaces are used in two distinct styles. In the first style, an interface’s meth- ods express the similarities of the concrete types that satisfy the interface but hide the rep- resentation details and intrinsic operations of those concrete types. The emphasis is on the methods, not on the concrete types. The second style exploits the ability of an interface value to hold values of a variety of concrete types and considers the interface to be the union of those types. Type assertions are used to discriminate among these types dynamically and treat each case differently. In this style, the emphasis is on the concrete types that satisfy the interface, not on the interface’s methods (if indeed it has any), and there is no hiding of information. If you’re familiar with object-oriented programming, you may recognize these two styles as subtype polymorphism and ad hoc polymorphism.
+2. a type switch looks like an ordinary switch statement in which the operand is `x.(type)` — that’s literally the keyword `type` — and each case has one or more types. A type switch enables a multi-way branch based on the interface value’s dynamic type. The nil case matches if x == nil, and the default case matches if no other case does. If the case needs access to the value extracted by the type assertion, the type switch statement has an extended form that binds the extracted value to a new variable within each case: `switch x := x.(type) { ... }`
