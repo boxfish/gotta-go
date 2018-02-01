@@ -1,5 +1,6 @@
 1. Regular expression
 2. Design patterns
+http://tmrts.com/go-patterns/
 3. ML and common statistics
 4. testing and debugging
 5. messaging bus
