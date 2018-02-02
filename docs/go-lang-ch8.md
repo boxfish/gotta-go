@@ -76,3 +76,6 @@
 3. If multiple cases are ready, select picks one at random, which ensures that every channel has an equal chance of being selected.
 4. A select may have a default, which specifies what to do when none of the other communications can proceed immediately. This makes the select non-blocking. Doing it repeatedly is called polling a channel.
 5. The zero value for a channel is nil. Because send and receive operations on a nil channel block forever, a case in a select statement whose channel is nil is never selected. This lets us use nil to enable or disable cases that correspond to features like handling timeouts or cancellation, responding to other input events, or emitting output. 
+
+## Cancellation
+1. After a channel has been closed and drained of all sent values, subsequent receive operations proceed immediately, yielding zero values. We can exploit this to create a broadcast mechanism: don’t send a value on the channel, close it.
