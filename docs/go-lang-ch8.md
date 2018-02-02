@@ -69,3 +69,10 @@
         ```
 
 4. Unbounded parallelism is rarely a good idea since there is always a limiting factor in the system. We can limit parallelism using a buffered channel of capacity n to model a concurrency primitive called a counting semaphore. Alternatively, we can spin off n goroutines to wait for a channel and let the main goroutine to send values to the channel.
+
+## Multiplexing with select
+1. The general form of a `select` statement is similar to a `switch` statement. It has a number of cases and an optional default. Each case specifies a communication (a send or receive operation on some channel) and an associated block of statements. A select waits until a communication for some case is ready to proceed. It then performs that communication and executes the case’s associated statements; the other communications do not happen.
+2. A select with no cases, select{}, waits forever.
+3. If multiple cases are ready, select picks one at random, which ensures that every channel has an equal chance of being selected.
+4. A select may have a default, which specifies what to do when none of the other communications can proceed immediately. This makes the select non-blocking. Doing it repeatedly is called polling a channel.
+5. The zero value for a channel is nil. Because send and receive operations on a nil channel block forever, a case in a select statement whose channel is nil is never selected. This lets us use nil to enable or disable cases that correspond to features like handling timeouts or cancellation, responding to other input events, or emitting output. 
