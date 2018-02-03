@@ -4,6 +4,7 @@ http://tmrts.com/go-patterns/
 3. ML and common statistics
 4. testing and debugging
 5. messaging bus
+6. caching memcache
 
 ## System Design
 1. http://www.dwmkerr.com/the-death-of-microservice-madness-in-2018/
